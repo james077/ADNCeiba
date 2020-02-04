@@ -42,22 +42,14 @@ public class ProductController {
 	@PostMapping("/")
 	public ResponseEntity<Product> createProduct(@RequestBody Product product) {
 		Product obj = productService.saveProduct(product);
-		if(obj!=null) {
-			return new ResponseEntity<Product>(obj, HttpStatus.OK);
-		}else {
-			return new ResponseEntity<Product>(obj, HttpStatus.INTERNAL_SERVER_ERROR);
-		}	
+		return new ResponseEntity<>(obj, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Product> delete(@PathVariable("id") int id) {
 		Product obj = productService.productById(id);
-		if (obj != null) {
-			productService.deleteById(id);
-			return new ResponseEntity<Product>(obj, HttpStatus.OK);
-		}else {
-			return new ResponseEntity<Product>(obj, HttpStatus.BAD_REQUEST);
-		}
+		productService.deleteById(id);
+		return new ResponseEntity<>(obj, HttpStatus.OK);		
 	}
 
 }
