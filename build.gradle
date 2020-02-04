@@ -1,0 +1,40 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'java'
+	id 'org.sonarqube' version '2.7'
+}
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+
+group = 'com.ceiba.adn'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+
+    compileOnly 'io.swagger:swagger-annotations:1.5.16'
+    compileOnly 'com.squareup.okhttp:okhttp:2.7.5'
+    compileOnly 'com.squareup.okhttp:logging-interceptor:2.7.5'
+    compileOnly 'com.google.code.gson:gson:2.8.1'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testCompile 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
+	testCompile 'org.mockito:mockito-junit-jupiter:2.23.0'
+	compileOnly 'io.swagger:swagger-codegen:2.2.3'
+	jacocoTestReport {
+		reports {
+			xml.enabled true
+		}
+	}
+	
+}
