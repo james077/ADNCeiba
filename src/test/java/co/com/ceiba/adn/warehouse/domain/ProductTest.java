@@ -38,7 +38,7 @@ public class ProductTest {
 
 		// Act and assert
 		BasePrueba.assertThrows(() -> p.validateDateIn(), NonWorkingDayException.class,
-				"Los Días Domingos no se permite el ingreso de productos");
+				"Los DÃ­as Domingos no se permite el ingreso de productos");
 	}
 
 	@Test
@@ -104,5 +104,23 @@ public class ProductTest {
 
 		// Assert
 		Assert.assertNotNull(ex);
+	}
+	
+	@Test
+	public void testCreateProductCorrect() {
+		// Arrange
+		Exception ex = null;
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(cal.getTimeInMillis()+2592000000L); //fecha actual mas 30 dias
+	
+		// Act
+		try {
+			 new Product(null,"otro Producto", cal.getTime(),new Date(),new Date(), 2, 3, 4);
+		} catch (Exception e) {
+			ex = e;
+		}
+
+		// Assert
+		Assert.assertNull(ex);
 	}
 }
