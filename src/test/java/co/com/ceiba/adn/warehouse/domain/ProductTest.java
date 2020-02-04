@@ -64,11 +64,11 @@ public class ProductTest {
 	@Test
 	public void testValidarFechaVencimientoInvalida() {
 		// Arrange
-		Date fechaVencimiento = new Date();
-		fechaVencimiento.setTime(fechaVencimiento.getTime() + (86400000 * 9));
+		Date expirationDate = new Date();
+		expirationDate.setTime(expirationDate.getTime() + (86400000 * 9));
 
 		// Act and assert
-		BasePrueba.assertThrows(() -> new Product().validateExpirationDate(fechaVencimiento),
+		BasePrueba.assertThrows(() -> new Product().validateExpirationDate(expirationDate),
 				ExpirationException.class, "El producto se vence en menos de 10 dias, no se puede ingresar");
 	}
 
@@ -76,12 +76,28 @@ public class ProductTest {
 	public void testValidarFechaVencimientoValida() {
 		// Arrange
 		Exception ex = null;
-		Date fechaVencimiento = new Date();
-		fechaVencimiento.setTime(fechaVencimiento.getTime() + (86400000 * 10));
+		Date expirationDate = new Date();
+		expirationDate.setTime(expirationDate.getTime() + (86400000 * 10));
 
 		// Act
 		try {
-			new Product().validateExpirationDate(fechaVencimiento);
+			new Product().validateExpirationDate(expirationDate);
+		} catch (Exception e) {
+			ex = e;
+		}
+
+		// Assert
+		Assert.assertNull(ex);
+	}
+	
+	@Test
+	public void testCreateProductDateNull() {
+		// Arrange
+		Exception ex = null;
+
+		// Act
+		try {
+			 new Product(null,"otro Producto", null,null,null, 2, 3, 4);
 		} catch (Exception e) {
 			ex = e;
 		}
