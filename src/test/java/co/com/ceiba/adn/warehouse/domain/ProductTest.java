@@ -103,6 +103,6 @@ public class ProductTest {
 		}
 
 		// Assert
-		Assert.assertNull(ex);
+		Assert.assertNotNull(ex);
 	}
 }
