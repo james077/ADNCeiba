@@ -38,7 +38,7 @@ public class ProductTest {
 
 		// Act and assert
 		BasePrueba.assertThrows(() -> p.validateDateIn(), NonWorkingDayException.class,
-				"Los DÃ­as Domingos no se permite el ingreso de productos");
+				"Los Días Domingos no se permite el ingreso de productos");
 	}
 
 	@Test
