@@ -2,6 +2,8 @@ package co.com.ceiba.adn.warehouse.infrastructure.controllers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,17 +40,24 @@ public class ProductController {
 	}
 	
 	@PostMapping("/")
-	public Object crearProducto(@RequestBody Product product) {
-		try {
-				return productService.saveProduct(product);
-			}catch(Exception e) {
-				return e.getMessage();
-			}	
+	public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+		Product obj = productService.saveProduct(product);
+		if(obj!=null) {
+			return new ResponseEntity<Product>(obj, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<Product>(obj, HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
 	}
 	
 	@DeleteMapping("/{id}")
-	public void eliminar(@PathVariable("id") int id) {
-		productService.deleteById(id);
+	public ResponseEntity<Product> delete(@PathVariable("id") int id) {
+		Product obj = productService.productById(id);
+		if (obj != null) {
+			productService.deleteById(id);
+			return new ResponseEntity<Product>(obj, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<Product>(obj, HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }

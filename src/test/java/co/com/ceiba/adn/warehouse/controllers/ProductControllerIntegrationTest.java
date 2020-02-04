@@ -8,6 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Date;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,6 +77,33 @@ public class ProductControllerIntegrationTest {
 	}
 	
 	@Test
+	public void testCreateProductFail() throws Exception {
+		//Arrange
+		String nombre = "Producto Creado via test Rest";
+		p.setNameProduct(nombre);
+		p.setExpirationDate(new Date());
+		ObjectMapper objMap = new ObjectMapper();
+		objMap.registerModule(new JavaTimeModule());
+		objMap.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+		objMap.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+		ObjectWriter objectWriter = objMap.writer().withDefaultPrettyPrinter();
+		String payLoad = objectWriter.writeValueAsString(p);
+		Exception ex = null;
+		
+		//Act 
+		
+		try {
+			mvc.perform(post("/api/products/")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(payLoad));
+		}catch(Exception e){
+			ex =e;
+		}
+		//Assert
+		Assert.assertNotNull(ex);
+	}
+	
+	@Test
 	public void testGivenProducts() throws Exception{
 		//Arrange @Before
 				
@@ -107,5 +137,15 @@ public class ProductControllerIntegrationTest {
 				mvc.perform(delete("/api/products/1")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
+	} 
+	
+	@Test
+	public void testDeleteNotFound() throws Exception{
+		//Arrange @Before
+
+		//act and assert
+		mvc.perform(delete("/api/products/?2")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().is4xxClientError());
 	} 
 }
