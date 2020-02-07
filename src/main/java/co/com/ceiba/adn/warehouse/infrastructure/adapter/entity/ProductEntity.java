@@ -1,6 +1,6 @@
 package co.com.ceiba.adn.warehouse.infrastructure.adapter.entity;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,15 +29,15 @@ public class ProductEntity {
 
 	@Column(name = "expiration_Date")
 	@Temporal(TemporalType.DATE)
-	private Date expirationDate;
+	private Calendar expirationDate;
 
 	@Column(name = "date_in")
 	@Temporal(TemporalType.DATE)
-	private Date dateIn;
+	private Calendar dateIn;
 
 	@Column(name = "date_out")
 	@Temporal(TemporalType.DATE)
-	private Date dateOut;
+	private Calendar dateOut;
 
 	@Column(name = "length")
 	private float length;

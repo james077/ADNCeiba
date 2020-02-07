@@ -24,7 +24,7 @@ public class ProductTest {
 		float height = 2;
 
 		// Act and Assert
-		BasePrueba.assertThrows(() -> new Product(null, nameProduct, null,new Date(),null, depth, width, height),
+		BasePrueba.assertThrows(() -> new Product(null, nameProduct, null,Calendar.getInstance(),null, depth, width, height),
 				RequiredValueException.class, "La fecha de vencimiento es un campo obligatorio");
 	}
 
@@ -34,7 +34,7 @@ public class ProductTest {
 		Product p = new ProductTestDataBuilder().build();
 		Calendar cal = Calendar.getInstance();
 		cal.set(2020, 0, 5, 0, 0, 0); // Domingo 5 de enero de 2020
-		p.setDateIn(cal.getTime());
+		p.setDateIn(cal);
 
 		// Act and assert
 		BasePrueba.assertThrows(() -> p.validateDateIn(), NonWorkingDayException.class,
@@ -48,7 +48,7 @@ public class ProductTest {
 		Product p = new ProductTestDataBuilder().build();
 		Calendar cal = Calendar.getInstance();
 		cal.set(2020, 0, 3, 0, 0, 0); // viernes 3  de enero de 2020
-		p.setDateIn(cal.getTime());
+		p.setDateIn(cal);
 
 		// Act
 		try {
@@ -64,8 +64,8 @@ public class ProductTest {
 	@Test
 	public void testValidarFechaVencimientoInvalida() {
 		// Arrange
-		Date expirationDate = new Date();
-		expirationDate.setTime(expirationDate.getTime() + (86400000 * 9));
+		Calendar expirationDate = Calendar.getInstance();
+		expirationDate.setTimeInMillis(expirationDate.getTimeInMillis() + (86400000 * 9));
 
 		// Act and assert
 		BasePrueba.assertThrows(() -> new Product().validateExpirationDate(expirationDate),
@@ -76,8 +76,8 @@ public class ProductTest {
 	public void testValidarFechaVencimientoValida() {
 		// Arrange
 		Exception ex = null;
-		Date expirationDate = new Date();
-		expirationDate.setTime(expirationDate.getTime() + (86400000 * 10));
+		Calendar expirationDate = Calendar.getInstance();
+		expirationDate.setTimeInMillis(expirationDate.getTimeInMillis() + (86400000 * 10));
 
 		// Act
 		try {
@@ -115,7 +115,7 @@ public class ProductTest {
 	
 		// Act
 		try {
-			 new Product(null,"otro Producto", cal.getTime(),new Date(),new Date(), 2, 3, 4);
+			 new Product(null,"otro Producto", cal,Calendar.getInstance(),Calendar.getInstance(), 2, 3, 4);
 		} catch (Exception e) {
 			ex = e;
 		}

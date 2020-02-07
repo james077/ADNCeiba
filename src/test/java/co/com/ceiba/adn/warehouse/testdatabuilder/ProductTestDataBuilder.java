@@ -8,7 +8,7 @@ import co.com.ceiba.adn.warehouse.domain.model.Product;
 public class ProductTestDataBuilder {
 
 	private String nameProduct;
-	private Date expirationDate;
+	private Calendar expirationDate;
 	private float depth;
 	private float width;
 	private float height;
@@ -18,7 +18,7 @@ public class ProductTestDataBuilder {
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(cal.getTimeInMillis()+2592000000L); //fecha actual mas 30 dias
-		this.expirationDate = cal.getTime();
+		this.expirationDate = cal;
 		this.depth = 2;
 		this.width = 2;
 		this.height = 2;
@@ -31,7 +31,7 @@ public class ProductTestDataBuilder {
 		}else {
 			Calendar cal = Calendar.getInstance();
 			cal.set(120, 2, 1,0,0,0);
-			this.expirationDate = cal.getTime();
+			this.expirationDate = cal;
 		}
 			
 		 return this;
@@ -43,6 +43,6 @@ public class ProductTestDataBuilder {
 	}
 	
 	public Product build() {
-		return new Product(null,nameProduct,expirationDate,new Date(),null,depth,width,height);
+		return new Product(null,nameProduct,expirationDate,Calendar.getInstance(),null,depth,width,height);
 	}
 }

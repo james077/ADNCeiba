@@ -1,6 +1,6 @@
 package co.com.ceiba.adn.warehouse.domain.utils;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import co.com.ceiba.adn.warehouse.domain.exception.RequiredValueException;
 import co.com.ceiba.adn.warehouse.domain.exception.WarehouseException;
@@ -15,11 +15,11 @@ public class ValidateUtils {
         }
     }
     
-    public int calculateDifDates(Date iniDate, Date finDate) {
+    public int calculateDifDates(Calendar iniDate, Calendar finDate) {
     	if(iniDate != null && finDate != null) {
 	    	int milliseconds = 60*60*24*1000;
-			int daysIniDate= (int) (iniDate.getTime()/milliseconds);
-	    	int daysFinDate =(int)(finDate.getTime()/milliseconds);
+			int daysIniDate= (int) (iniDate.getTimeInMillis()/milliseconds);
+	    	int daysFinDate =(int)(finDate.getTimeInMillis()/milliseconds);
 			return daysFinDate - daysIniDate;
     	}else {
     		throw new WarehouseException(FECHAS_NO_PUEDEN_SER_NULL);

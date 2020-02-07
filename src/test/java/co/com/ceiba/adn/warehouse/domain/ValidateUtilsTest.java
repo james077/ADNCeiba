@@ -1,7 +1,6 @@
 package co.com.ceiba.adn.warehouse.domain;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,11 +53,11 @@ public class ValidateUtilsTest {
 	@Test
 	public void testCalculateDifDates() {
 		//Arrange
-		Calendar cal = Calendar.getInstance();
-		cal.set(2020, 0, 3, 0, 0, 0); 
-		Date iniDate = cal.getTime();
-		cal.set(2020, 0, 4, 0, 0, 0); 
-		Date finDate = cal.getTime();
+		Calendar iniDate = Calendar.getInstance();
+		iniDate.set(2020, 0, 3, 0, 0, 0); 
+
+		Calendar finDate = Calendar.getInstance();
+		finDate.set(2020, 0, 4, 0, 0, 0);
 		int days;
 		
 		//Act
@@ -71,8 +70,8 @@ public class ValidateUtilsTest {
 	@Test
 	public void testCalculateDifDatesNull() {
 		//Arrange
-		Date iniDate = null;
-		Date finDate = null;
+		Calendar iniDate = null;
+		Calendar finDate = null;
 		msg="Las fechas no pueden ser nulas";
 		
 		//Act and Assert

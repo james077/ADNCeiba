@@ -1,8 +1,6 @@
 package co.com.ceiba.adn.warehouse.domain.model;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import co.com.ceiba.adn.warehouse.domain.exception.ExpirationException;
 import co.com.ceiba.adn.warehouse.domain.exception.NonWorkingDayException;
@@ -18,17 +16,17 @@ public class Product {
 	
 	private Integer idProduct;
 	private String nameProduct;
-	private Date expirationDate;
-	private Date dateIn;
-	private Date dateOut;
+	private Calendar expirationDate;
+	private Calendar dateIn;
+	private Calendar dateOut;
 	private float length;
 	private float width;
 	private float height;
 	
 	public Product() {}
 
-	public Product(Integer idProduct, String nameProduct, Date expirationDate,Date dateIn,
-			 Date dateOut, float length, float width, float height) {
+	public Product(Integer idProduct, String nameProduct, Calendar expirationDate,Calendar dateIn,
+			 Calendar dateOut, float length, float width, float height) {
 		ValidateUtils val = new ValidateUtils();
 		val.validateObligatory(expirationDate, FECHA_VENCIMIENTO_CAMPO_OBLIGATORIO);
 		val.validateObligatory(length, DIMENSIONES_CAMPOS_OBLIGATORIOS);
@@ -46,17 +44,16 @@ public class Product {
 	}
 	
 	public boolean validateDateIn() {		
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(this.dateIn);
-		if(gc.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
+
+		if(dateIn.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
 			throw new NonWorkingDayException(LOS_DOMINGOS_NO_SE_PERMITE_INGRESAR);
 		}
 		return true;
 	}
 	
-	public boolean validateExpirationDate(Date expirationDate) {
+	public boolean validateExpirationDate(Calendar expirationDate) {
 		
-		int days = new ValidateUtils().calculateDifDates(new Date(),expirationDate);
+		int days = new ValidateUtils().calculateDifDates(Calendar.getInstance(),expirationDate);
 		if (days < MINIMO_DIAS_VENCIMIENTO) {
 			throw new ExpirationException(FECHA_DE_VENCIMIENTO_PROXIMA);
 		}
@@ -80,28 +77,28 @@ public class Product {
 		this.nameProduct = nameProduct;
 	}
 
-	public Date getExpirationDate() {
-		return (expirationDate!=null)? (Date)expirationDate.clone() : null;
+	public Calendar getExpirationDate() {
+		return (expirationDate!=null)? (Calendar)expirationDate.clone() : null;
 	}
 
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = (expirationDate!=null)? (Date)expirationDate.clone() : null;
+	public void setExpirationDate(Calendar expirationDate) {
+		this.expirationDate = (expirationDate!=null)? (Calendar)expirationDate.clone() : null;
 	}
 
-	public Date getDateIn() {
-		return (dateIn!=null)?(Date)dateIn.clone():null;
+	public Calendar getDateIn() {
+		return (dateIn!=null)?(Calendar)dateIn.clone():null;
 	}
 
-	public void setDateIn(Date dateIn) {
-		this.dateIn = (dateIn!=null)? (Date)dateIn.clone() : null;
+	public void setDateIn(Calendar dateIn) {
+		this.dateIn = (dateIn!=null)? (Calendar)dateIn.clone() : null;
 	}
 
-	public Date getDateOut() {
-		return (dateOut != null)? (Date)dateOut.clone():null;
+	public Calendar getDateOut() {
+		return (dateOut != null)? (Calendar)dateOut.clone():null;
 	}
 
-	public void setDateOut(Date dateOut) {
-		this.dateOut = (dateOut!=null)? (Date)dateOut.clone() : null;
+	public void setDateOut(Calendar dateOut) {
+		this.dateOut = (dateOut!=null)? (Calendar)dateOut.clone() : null;
 	}
 
 	public float getLength() {
