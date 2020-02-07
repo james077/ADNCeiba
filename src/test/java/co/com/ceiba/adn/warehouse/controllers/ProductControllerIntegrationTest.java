@@ -44,12 +44,14 @@ public class ProductControllerIntegrationTest {
 	
 	String nameProduct;
 	Product p;
+	Integer id;
 	
 	@Before
 	public void createTestProduct() {
 		nameProduct = "test Product";
 		p = new ProductTestDataBuilder().conNombre(nameProduct).build();
-		productRepository.save(p);
+		p=productRepository.save(p);
+		id=p.getIdProduct();
 	}
 	
 	@Test
@@ -82,8 +84,7 @@ public class ProductControllerIntegrationTest {
 		.contentType(MediaType.APPLICATION_JSON))
 		.andExpect(status().isOk())
 		.andExpect(content()
-		.contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-		.andExpect(jsonPath("$[0].nameProduct", is(nameProduct)));
+		.contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
 		
 	}
 	
